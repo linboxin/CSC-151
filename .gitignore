@@ -1,0 +1,25 @@
+# Ignore InClass Examples folder
+InClass Examples/
+
+# IDE and project files
+*.iml
+.idea/
+*.class
+*.jar
+
+# Build directories
+bin/
+out/
+target/
+
+# OS metadata
+.DS_Store
+__MACOSX/
+
+# Generated documentation
+doc/
+
+# IDE temp files
+.classpath
+.project
+.settings/
