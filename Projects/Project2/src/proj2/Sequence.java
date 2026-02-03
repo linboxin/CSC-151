@@ -36,7 +36,7 @@ public class Sequence
      */
     private void insert(int index, String item){
         if (size == contents.length) {
-            ensureCapacity(contents.length * 2);
+            ensureCapacity(contents.length * 2 + 1);
         }
 
         for (int i =size; i>index; i--) {
@@ -47,6 +47,7 @@ public class Sequence
         curr = index;
 
     }
+
 
     /**
      * Adds a string to the sequence in the location before the
@@ -201,9 +202,30 @@ public class Sequence
      */
     public Sequence clone()
     {
+        return new Sequence(size);
     }
-   
-    
+
+
+    /**
+     * Remove the element at the given index and shift everything to the left.
+     * Precondition: 0 <= index < size;
+     * PostCondition: size decreases by 1;
+     * If the remove element was the last one then the curr becomes -1. or else the curr becomes the index
+     */
+    private void remove(int index) {
+        for (int i = index; i < size -1; i++) {
+           contents[i] = contents[i+1];
+       }
+       contents[size - 1] = null;
+       size -=1;
+
+       if (index>= size){
+           curr = -1;
+       }else{
+           curr = index;
+       }
+    }
+
     /**
      * Remove the current element from this sequence.  The following
      * element, if there was one, becomes the current element.  If
@@ -214,6 +236,9 @@ public class Sequence
      */
     public void removeCurrent()
     {
+        if (isCurrent()){
+            remove(curr);
+        }
     }
 
     
@@ -266,6 +291,7 @@ public class Sequence
      */
     public String toString() 
     {
+        return ("Temp");
     }
     
     /**
@@ -284,6 +310,7 @@ public class Sequence
      */
     public boolean equals(Sequence other) 
     {
+        return true;
     }
     
     
