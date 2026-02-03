@@ -271,6 +271,12 @@ public class Sequence
      */
     public void trimToSize()
     {
+
+        String [] newContents = new String[size];
+        for (int i = 0; i < size; i++){
+            newContents[i] = contents[i];
+        }
+        contents = newContents;
     }
     
     
@@ -329,6 +335,8 @@ public class Sequence
      */
     public void clear()
     {
+        size = 0;
+        curr = -1;
     }
 
 }
