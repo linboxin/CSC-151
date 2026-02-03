@@ -5,7 +5,9 @@ package proj2;  // Gradescope needs this.
 public class Sequence
 {
 
-
+    private String[] contents;
+    private int size;
+    private int curr;
 
 
     /**
@@ -14,7 +16,7 @@ public class Sequence
     public Sequence() {
     	// REMOVE THIS:
     	//
-    	// capacity is reflected in the length of the 
+    	// capacity is reflected in the length of the
     	// internal array
     }
     
