@@ -6,18 +6,15 @@ public class Sequence
 {
 
     private String[] contents;
-    private int size;
-    private int curr;
+    private int size = 0;
+    private int curr = -1;
 
 
     /**
      * Creates a new sequence with initial capacity 10.
      */
     public Sequence() {
-    	// REMOVE THIS:
-    	//
-    	// capacity is reflected in the length of the
-    	// internal array
+        contents = new String[10];
     }
     
 
@@ -27,10 +24,7 @@ public class Sequence
      * @param initialCapacity the initial capacity of the sequence.
      */
     public Sequence(int initialCapacity){
-    	// REMOVE THIS:
-    	//
-    	// capacity is reflected in the length of the 
-    	// internal array
+    	contents = new String[initialCapacity];
     }
     
 
@@ -48,6 +42,7 @@ public class Sequence
      */
     public void addBefore(String value)
     {
+
     }
     
     
@@ -73,7 +68,7 @@ public class Sequence
      */
     public boolean isCurrent()
     {
-
+        return curr != -1;
     }
     
     
@@ -82,6 +77,7 @@ public class Sequence
      */
     public int getCapacity()
     {
+        return contents.length;
     }
 
     
@@ -91,6 +87,10 @@ public class Sequence
      */
     public String getCurrent()
     {
+        if (!isCurrent()){
+            return null;
+        }
+        return contents[curr];
     }
     
     
@@ -138,13 +138,13 @@ public class Sequence
      */
     public void advance()
     {
-        if (isCurrent()){
-            if (current < size() -1) {
-                current++;
-            } else{
-                current = -1;
-            }
-        }
+//        if (isCurrent()){
+//            if (current < size() -1) {
+//                current++;
+//            } else{
+//                current = -1;
+//            }
+//        }
 //        if (isCurrent()) {
 //            current++;
 //        }
@@ -185,6 +185,7 @@ public class Sequence
      */
     public int size()
     {
+        return size;
     }
 
     
@@ -194,6 +195,11 @@ public class Sequence
      */
     public void start()
     {
+        if (size == 0 ){
+            curr = -1;
+        }else{
+            curr = 0;
+        }
     }
 
     
@@ -250,6 +256,7 @@ public class Sequence
      */
     public boolean isEmpty()
     {
+        return size ==0;
     }
     
     
