@@ -28,6 +28,7 @@ public class Sequence
     	contents = new String[initialCapacity];
     }
 
+    // Moved all the private helper methods to one location;
     /**
      * Ensure that the sequence have room for at least one more element.
      *
@@ -38,7 +39,6 @@ public class Sequence
             ensureCapacity(getCapacity() * 2 + 1);
         }
     }
-
 
     /**
      * Insert value at the given index.
@@ -57,6 +57,39 @@ public class Sequence
 
     }
 
+    /**
+     * Remove the element at the given index and shift everything to the left.
+     * Precondition: 0 <= index < size;
+     * PostCondition: size decreases by 1;
+     * If the remove element was the last one then the curr becomes -1. or else the curr becomes the index
+     */
+    private void remove(int index) {
+        for (int i = index; i < size -1; i++) {
+            contents[i] = contents[i+1];
+        }
+        contents[size - 1] = null;
+        size -=1;
+
+        if (index>= size){
+            curr = -1;
+        }else{
+            curr = index;
+        }
+    }
+
+    /**
+     * Create a new array with the capacity and copy this sequences elements into it (from index 0 up to size-1).
+     *
+     * Precondition: newCapacity >= size
+     * Postcondition: returns a new String[] containing the same elements, in the same order.
+     */
+    private String[] copyToNewArray(int newCapacity) {
+        String[] res = new String[newCapacity];
+        for (int i=0; i<size; i++) {
+            res[i] = contents[i];
+        }
+        return res;
+    }
 
     /**
      * Adds a string to the sequence in the location before the
@@ -145,11 +178,7 @@ public class Sequence
     public void ensureCapacity(int minCapacity)
     {
         if (minCapacity > getCapacity()) {
-            String[] newCapacity = new String[minCapacity];
-            for (int i = 0; i < size; i++){
-                newCapacity[i] = contents[i];
-            }
-            contents = newCapacity;
+            contents = copyToNewArray(minCapacity);
         }
     }
 
@@ -221,34 +250,13 @@ public class Sequence
     public Sequence clone()
     {
         Sequence clone = new Sequence(contents.length);
-        for (int i = 0; i < size; i++) {
-            clone.contents[i] = contents[i];
-        }
+        clone.contents = copyToNewArray(getCapacity());
         clone.size = size;
         clone.curr = curr;
         return clone;
     }
 
 
-    /**
-     * Remove the element at the given index and shift everything to the left.
-     * Precondition: 0 <= index < size;
-     * PostCondition: size decreases by 1;
-     * If the remove element was the last one then the curr becomes -1. or else the curr becomes the index
-     */
-    private void remove(int index) {
-        for (int i = index; i < size -1; i++) {
-           contents[i] = contents[i+1];
-       }
-       contents[size - 1] = null;
-       size -=1;
-
-       if (index>= size){
-           curr = -1;
-       }else{
-           curr = index;
-       }
-    }
 
     /**
      * Remove the current element from this sequence.  The following
@@ -295,12 +303,7 @@ public class Sequence
      */
     public void trimToSize()
     {
-
-        String [] newContents = new String[size];
-        for (int i = 0; i < size; i++){
-            newContents[i] = contents[i];
-        }
-        contents = newContents;
+        contents = copyToNewArray(size);
     }
     
     
