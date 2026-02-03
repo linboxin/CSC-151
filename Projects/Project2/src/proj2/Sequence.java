@@ -7,6 +7,15 @@ package proj2;  // Gradescope needs this.
 
 public class Sequence
 {
+
+
+    /**
+     * Invariants
+     *
+     * contents is String[] that stores the element of the sequence
+     * size is the number of valid elements in the sequence
+     * curr is the index of the current element. -1 if there is no curr.
+     */
     private String[] contents;
     private int size = 0;
     private int curr = -1;
@@ -366,11 +375,14 @@ public class Sequence
         for (int i = 0; i < size; i++) {
             String a = this.contents[i];
             String b = other.contents[i];
-            if (a == null && b != null) {
-                return false;
-            }
-            if (a != null && !a.equals(b)) {
-                return false;
+            if (a==null ) {
+                if (b!= null){
+                    return false;
+                }
+            }else {
+                if (!a.equals(b)) {
+                    return false;
+                }
             }
         }
         return true;
