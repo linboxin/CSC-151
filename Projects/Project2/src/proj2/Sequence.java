@@ -4,6 +4,10 @@ package proj2;  // Gradescope needs this.
  */
 public class Sequence
 {
+
+
+
+
     /**
      * Creates a new sequence with initial capacity 10.
      */
@@ -67,6 +71,7 @@ public class Sequence
      */
     public boolean isCurrent()
     {
+
     }
     
     
@@ -131,6 +136,17 @@ public class Sequence
      */
     public void advance()
     {
+        if (isCurrent()){
+            if (current < size() -1) {
+                current++;
+            } else{
+                current = -1;
+            }
+        }
+//        if (isCurrent()) {
+//            current++;
+//        }
+
     }
 
     
