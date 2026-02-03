@@ -1,10 +1,12 @@
 package proj2;  // Gradescope needs this.
 /**
- *  I'd fill this in if I were you.
+ * @author James Lin
+ * @version Project 2
+ * I affirm that I have carried out the attached academic endeavors with full academic honesty, in accordance with the Union College Honor Code and the course syllabus.
  */
+
 public class Sequence
 {
-
     private String[] contents;
     private int size = 0;
     private int curr = -1;
@@ -16,7 +18,6 @@ public class Sequence
     public Sequence() {
         contents = new String[10];
     }
-    
 
     /**
      * Creates a new sequence.
@@ -27,6 +28,17 @@ public class Sequence
     	contents = new String[initialCapacity];
     }
 
+    /**
+     * Ensure that the sequence have room for at least one more element.
+     *
+     * PostCondition: The capacity of the sequence is increased if and only if the sequence was previously full.
+     */
+    private void growIfFull() {
+        if (size == getCapacity()) {
+            ensureCapacity(getCapacity() * 2 + 1);
+        }
+    }
+
 
     /**
      * Insert value at the given index.
@@ -35,10 +47,7 @@ public class Sequence
      * PostCondition: size increases by 1 and curr is now the new index.
      */
     private void insert(int index, String item){
-        if (size == contents.length) {
-            ensureCapacity(contents.length * 2 + 1);
-        }
-
+        growIfFull();
         for (int i =size; i>index; i--) {
             contents[i] = contents[i-1];
         }
@@ -135,7 +144,7 @@ public class Sequence
      */
     public void ensureCapacity(int minCapacity)
     {
-        if (minCapacity > contents.length){
+        if (minCapacity > getCapacity()) {
             String[] newCapacity = new String[minCapacity];
             for (int i = 0; i < size; i++){
                 newCapacity[i] = contents[i];
@@ -162,6 +171,19 @@ public class Sequence
      */
     public void addAll(Sequence another)
     {
+        if (another ==null || another.size == 0){
+            return;
+        }
+        int savedCurr = curr;
+        int needed = size + another.size;
+        ensureCapacity(needed);
+
+        for (int i = 0; i < another.size; i++) {
+            contents[size + i] = another.contents[i];
+        }
+
+        size = needed;
+        curr = savedCurr;
     }
 
     
@@ -176,17 +198,13 @@ public class Sequence
      */
     public void advance()
     {
-//        if (isCurrent()){
-//            if (current < size() -1) {
-//                current++;
-//            } else{
-//                current = -1;
-//            }
-//        }
-//        if (isCurrent()) {
-//            current++;
-//        }
-
+        if (isCurrent()){
+            if (curr < size() -1) {
+                curr++;
+            } else{
+                curr = -1;
+            }
+        }
     }
 
     
@@ -202,7 +220,13 @@ public class Sequence
      */
     public Sequence clone()
     {
-        return new Sequence(size);
+        Sequence clone = new Sequence(contents.length);
+        for (int i = 0; i < size; i++) {
+            clone.contents[i] = contents[i];
+        }
+        clone.size = size;
+        clone.curr = curr;
+        return clone;
     }
 
 
@@ -297,7 +321,18 @@ public class Sequence
      */
     public String toString() 
     {
-        return ("Temp");
+        String result = "{";
+        for (int i = 0; i < size; i++) {
+            if (i>0) {
+                result += ", ";
+            }
+            if (i == curr){
+                result += ">";
+            }
+            result += contents[i];
+        }
+        result += "} (capacity = " + getCapacity() + ")";
+        return result;
     }
     
     /**
@@ -316,6 +351,25 @@ public class Sequence
      */
     public boolean equals(Sequence other) 
     {
+        if (other == null){
+            return false;
+        }
+        if (this.curr != other.curr){
+            return false;
+        }
+        if (this.size != other.size){
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            String a = this.contents[i];
+            String b = other.contents[i];
+            if (a == null && b != null) {
+                return false;
+            }
+            if (a != null && !a.equals(b)) {
+                return false;
+            }
+        }
         return true;
     }
     
