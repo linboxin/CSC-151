@@ -26,7 +26,27 @@ public class Sequence
     public Sequence(int initialCapacity){
     	contents = new String[initialCapacity];
     }
-    
+
+
+    /**
+     * Insert value at the given index.
+     * Make space in the array for the inserted value.
+     * Precondition: Index has to be 0<= index <= size
+     * PostCondition: size increases by 1 and curr is now the new index.
+     */
+    private void insert(int index, String item){
+        if (size == contents.length) {
+            ensureCapacity(contents.length * 2);
+        }
+
+        for (int i =size; i>index; i--) {
+            contents[i] = contents[i-1];
+        }
+        contents[index] = item;
+        size += 1;
+        curr = index;
+
+    }
 
     /**
      * Adds a string to the sequence in the location before the
@@ -42,7 +62,11 @@ public class Sequence
      */
     public void addBefore(String value)
     {
-
+        if (!isCurrent()) {
+            insert(0, value);
+        }else{
+            insert(curr, value);
+        }
     }
     
     
@@ -60,6 +84,12 @@ public class Sequence
      */
     public void addAfter(String value)
     {
+        int afterCurr = curr + 1;
+        if (!isCurrent()) {
+            insert(size, value);
+        }else{
+            insert(afterCurr, value);
+        }
     }
 
     
@@ -104,6 +134,13 @@ public class Sequence
      */
     public void ensureCapacity(int minCapacity)
     {
+        if (minCapacity > contents.length){
+            String[] newCapacity = new String[minCapacity];
+            for (int i = 0; i < size; i++){
+                newCapacity[i] = contents[i];
+            }
+            contents = newCapacity;
+        }
     }
 
     
