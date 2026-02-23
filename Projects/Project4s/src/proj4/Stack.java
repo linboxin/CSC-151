@@ -1,42 +1,54 @@
 package proj4;
 
 /**
- * Write a description of class Stack here. Don't forget your Javadocs.
+ * A default Last In First Out stack.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author James, Shun, Asiya
+ * @version 2/22/2026
  */
 public class Stack<T>
 {
     private T[] contents;
+    private int size;
 
+    // Create the stack with a default capacity of 10
     public Stack() {
-
+        contents = (T[]) new Object[10];
+        size = 0;
     }
 
 
     public boolean isEmpty() {
-        return contents.length == 0;
+        return size() == 0;
     }
 
 
     public void push(T value) {
-
+        ensureCapacity(size + 1);
+        contents[size++] = value;
     }
 
 
     public T pop() {
-        return null; //erase this
+        if (isEmpty()) {
+            return null;
+        }
+
+        // James: IDK if required, but if it is, you guys need to basically free the popped element by setting it to null or something like that.
+        return contents[--size];
     }
 
 
     public T peek() {
-        return null; //erase this
+        if (isEmpty()) {
+            return null;
+        }
+        return contents[size-1];
     }
 
 
     public int size() {
-        return -1; //erase this
+        return size;
     }
 
     /**
@@ -44,7 +56,25 @@ public class Stack<T>
      * @return string in the form {>A, B, C} where > denotes the stack top
      */
     public String toString() {
-    	return "";  //erase this
+        String res = new String("{>");
+        for (int i = size - 1; i >= 0; i--) {
+            res += contents[i];
+            if (i != 0) {
+                res += ", ";
+            }
+        }
+        res = res + "}";
+        return res;
+    }
+
+    private void ensureCapacity(int minCapacity) {
+        if (minCapacity > contents.length) {
+            T[] res = (T[]) new Object[minCapacity];
+            for (int i = 0; i < size; i++) {
+                res[i] = contents[i];
+            }
+            contents = res;
+        }
     }
     
 } 
